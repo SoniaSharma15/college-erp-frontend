@@ -11,6 +11,7 @@ import CollegesList from "../features/superadmin/pages/CollegesList";
 
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
+import AuthorityNoticePage from "../features/admin/pages/authorityNotice/pages/AuthorityNoticePage";
 
 const AppRoutes = () => {
   return (
@@ -50,7 +51,18 @@ const AppRoutes = () => {
     </ProtectedRoute>
   }
 />
+ // =========================
+      // ADMIN ROUTES
+      // =========================
 
+      <Route
+        path="/admin/authority-notice"
+        element={
+          // <ProtectedRoute>
+              <AuthorityNoticePage />
+          // </ProtectedRoute> 
+        }
+      />
     </Routes>
   );
 };
