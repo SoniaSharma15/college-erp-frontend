@@ -71,7 +71,7 @@ const AppRoutes = () => {
         path="/admin/staff"
         element={
           <ProtectedRoute>
-            <RoleRoute allowedRoles={["COLLEGE_ADMIN", "SUPER_ADMIN"]}>
+            <RoleRoute allowedRoles={["COLLEGE_ADMIN"]}>
               <StaffList />
             </RoleRoute>
           </ProtectedRoute>
@@ -82,7 +82,7 @@ const AppRoutes = () => {
         path="/admin/staff/create"
         element={
           <ProtectedRoute>
-            <RoleRoute allowedRoles={["COLLEGE_ADMIN", "SUPER_ADMIN"]}>
+            <RoleRoute allowedRoles={["COLLEGE_ADMIN"]}>
               <CreateStaff />
             </RoleRoute>
           </ProtectedRoute>
@@ -93,7 +93,7 @@ const AppRoutes = () => {
         path="/admin/staff/edit/:id"
         element={
           <ProtectedRoute>
-            <RoleRoute allowedRoles={["COLLEGE_ADMIN", "SUPER_ADMIN"]}>
+            <RoleRoute allowedRoles={["COLLEGE_ADMIN"]}>
               <EditStaff />
             </RoleRoute>
           </ProtectedRoute>
