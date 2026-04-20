@@ -21,6 +21,7 @@ import EditStaff from "../features/admin/pages/staff/EditStaff";// Route Guards
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
 import AuthorityNoticePage from "../features/admin/pages/authorityNotice/pages/AuthorityNoticePage";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 const AppRoutes = () => {
   return (
@@ -139,9 +140,11 @@ const AppRoutes = () => {
       <Route
         path="/admin/authority-notice"
         element={
-          // <ProtectedRoute>
+          <ProtectedRoute>
+            <DashboardLayout>
               <AuthorityNoticePage />
-          // </ProtectedRoute> 
+            </DashboardLayout>
+         </ProtectedRoute> 
         }
       />
 

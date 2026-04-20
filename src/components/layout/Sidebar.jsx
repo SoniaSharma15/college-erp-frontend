@@ -10,7 +10,8 @@ import {
   GraduationCap, 
   LogOut,
   Settings,
-  Building2
+  Building2,
+  File
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -31,7 +32,8 @@ const Sidebar = () => {
       { name: "Staff", path: "/admin/staff", icon: Users },
       { name: "Departments", path: "/admin/departments", icon: Building2 },
       { name: "Courses", path: "/admin/courses", icon: BookOpen },
-      { name: "Branches", path: "/admin/branches", icon: GitBranch }
+      { name: "Branches", path: "/admin/branches", icon: GitBranch },
+      { name: "Notice", path: "/admin/authority-notice", icon: File }
     ],
     FACULTY: [
       { name: "Dashboard", path: "/faculty", icon: LayoutDashboard },
