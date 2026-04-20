@@ -24,7 +24,7 @@ const AppRoutes = () => {
     <Routes>
 
       {/* PUBLIC */}
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
 
       {/* ================= SUPER ADMIN ================= */}
 
