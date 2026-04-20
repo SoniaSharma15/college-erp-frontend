@@ -22,6 +22,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
 import AuthorityNoticePage from "../features/admin/pages/authorityNotice/pages/AuthorityNoticePage";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import FeesAnalyticsPage from "../features/admin/pages/FeesAnalytics";
 
 const AppRoutes = () => {
   return (
@@ -29,7 +30,7 @@ const AppRoutes = () => {
 
       {/* AUTH */}
       {/* PUBLIC */}
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
 
       {/* ================= SUPER ADMIN ================= */}
 
@@ -73,7 +74,7 @@ const AppRoutes = () => {
         path="/admin/staff"
         element={
           <ProtectedRoute>
-            <RoleRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]}>
+            <RoleRoute allowedRoles={["COLLEGE_ADMIN"]}>
               <StaffList />
             </RoleRoute>
           </ProtectedRoute>
@@ -84,7 +85,7 @@ const AppRoutes = () => {
         path="/admin/staff/create"
         element={
           <ProtectedRoute>
-            <RoleRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]}>
+            <RoleRoute allowedRoles={["COLLEGE_ADMIN"]}>
               <CreateStaff />
             </RoleRoute>
           </ProtectedRoute>
@@ -95,7 +96,7 @@ const AppRoutes = () => {
         path="/admin/staff/edit/:id"
         element={
           <ProtectedRoute>
-            <RoleRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]}>
+            <RoleRoute allowedRoles={["COLLEGE_ADMIN"]}>
               <EditStaff />
             </RoleRoute>
           </ProtectedRoute>
@@ -143,6 +144,16 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <DashboardLayout>
               <AuthorityNoticePage />
+            </DashboardLayout>
+         </ProtectedRoute> 
+        }
+      />
+      <Route
+        path="/admin/fees-analytics"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <FeesAnalyticsPage />
             </DashboardLayout>
          </ProtectedRoute> 
         }

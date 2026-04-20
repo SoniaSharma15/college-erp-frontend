@@ -33,7 +33,8 @@ const Sidebar = () => {
       { name: "Departments", path: "/admin/departments", icon: Building2 },
       { name: "Courses", path: "/admin/courses", icon: BookOpen },
       { name: "Branches", path: "/admin/branches", icon: GitBranch },
-      { name: "Notice", path: "/admin/authority-notice", icon: File }
+      { name: "Notice", path: "/admin/authority-notice", icon: File },
+      { name: "Analytics", path: "/admin/fees-analytics", icon: File }
     ],
     FACULTY: [
       { name: "Dashboard", path: "/faculty", icon: LayoutDashboard },

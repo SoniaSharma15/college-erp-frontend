@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { Pencil } from "lucide-react";
 import StaffForm from "../../../../components/staff/StaffForm";
 import { getAllStaff, updateStaff } from "../../../../services/staff.service";
 import { useParams, useNavigate } from "react-router-dom";
+import DashboardLayout from "../../../../components/layout/DashboardLayout";
 
 const EditStaff = () => {
   const { id } = useParams();
@@ -21,13 +23,20 @@ const EditStaff = () => {
     navigate("/admin/staff");
   };
 
-  if (!data) return <p>Loading...</p>;
+  if (!data) return <p className="p-6">Loading...</p>;
 
   return (
-    <div className="p-6">
-      <h2>Edit Staff</h2>
-      <StaffForm initialData={data} onSubmit={handleUpdate} />
-    </div>
+    <DashboardLayout>
+      <div className="space-y-6">
+
+        <div className="flex items-center gap-2">
+          <Pencil className="text-yellow-600" />
+          <h2 className="text-2xl font-bold">Edit Staff</h2>
+        </div>
+
+        <StaffForm initialData={data} onSubmit={handleUpdate} />
+      </div>
+    </DashboardLayout>
   );
 };
 
