@@ -12,40 +12,50 @@ const Login = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    if (error) setError(""); // Clear error when typing
+    if (error) setError("");
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setError("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-  try {
-    localStorage.clear(); // 🔥 FIX
+    try {
+      localStorage.clear();
 
-    const res = await axios.post("/auth/login", form);
+      const res = await axios.post("/auth/login", form);
 
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+      const { token, user } = res.data;
 
-    const role = res.data.user.roles[0];
+      // 🔥 SAVE
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
-    if (role === "SUPER_ADMIN") {
-      navigate("/superadmin");
-    } else if (role === "COLLEGE_ADMIN") {
-      navigate("/admin");
+      // 🔥 SAFE ROLE EXTRACT
+      const role = user?.roles?.[0] || user?.role;
+
+      // 🔥 REDIRECT FIX
+      if (role === "SUPER_ADMIN") {
+        navigate("/superadmin");
+      } else if (role === "COLLEGE_ADMIN") {
+        navigate("/admin");
+      } else if (role === "FACULTY") {
+        navigate("/faculty"); // ✅ FIXED
+      } else if (role === "STUDENT") {
+        navigate("/student");
+      } else {
+        navigate("/"); // fallback
+      }
+
+    } catch (err) {
+      setError(err.response?.data?.message || "Invalid email or password");
+    } finally {
+      setLoading(false);
     }
-
-  } catch (err) {
-    setError(err.response?.data?.message || "Invalid email or password");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      {/* Main Card */}
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
         
         {/* Header */}
@@ -54,10 +64,10 @@ const Login = () => {
             <LogIn className="w-8 h-8 text-blue-600" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="text-gray-500 mt-2">Please enter your details to sign in</p>
+          <p className="text-gray-500 mt-2">Please enter your details</p>
         </div>
 
-        {/* Error Message */}
+        {/* Error */}
         {error && (
           <div className="mb-6 flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
             <AlertCircle className="w-4 h-4" />
@@ -66,61 +76,52 @@ const Login = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Field */}
+          
+          {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
-              Email Address
+            <label className="text-sm font-medium text-gray-700 mb-1 ml-1">
+              Email
             </label>
-            <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-blue-600 transition-colors" />
-              </div>
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
               <input
                 name="email"
                 type="email"
                 required
-                className="block w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
-                placeholder="you@college.edu"
+                className="w-full pl-10 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter email"
                 onChange={handleChange}
               />
             </div>
           </div>
 
-          {/* Password Field */}
+          {/* Password */}
           <div>
-            <div className="flex justify-between mb-1.5 ml-1">
-              <label className="text-sm font-medium text-gray-700">Password</label>
-              <a href="#" className="text-sm font-semibold text-blue-600 hover:text-blue-700">
-                Forgot?
-              </a>
-            </div>
-            <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-600 transition-colors" />
-              </div>
+            <label className="text-sm font-medium text-gray-700 mb-1 ml-1">
+              Password
+            </label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
               <input
                 name="password"
                 type="password"
                 required
-                className="block w-full pl-10 pr-3 py-2.5 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all"
-                placeholder="••••••••"
+                className="w-full pl-10 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter password"
                 onChange={handleChange}
               />
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-blue-200"
+            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold flex justify-center"
           >
-            {loading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              "Sign In"
-            )}
+            {loading ? <Loader2 className="animate-spin" /> : "Sign In"}
           </button>
+
         </form>
       </div>
     </div>

@@ -21,7 +21,9 @@ import EditStaff from "../features/admin/pages/staff/EditStaff";// Route Guards
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
 import AuthorityNoticePage from "../features/admin/pages/authorityNotice/pages/AuthorityNoticePage";
-
+import DashboardLayout from "../components/layout/DashboardLayout";
+import FeesAnalyticsPage from "../features/admin/pages/FeesAnalytics";
+import FacultyDashboard from "../features/faculty/pages/Dashboard";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -139,11 +141,36 @@ const AppRoutes = () => {
       <Route
         path="/admin/authority-notice"
         element={
-          // <ProtectedRoute>
+          <ProtectedRoute>
+            <DashboardLayout>
               <AuthorityNoticePage />
-          // </ProtectedRoute> 
+            </DashboardLayout>
+         </ProtectedRoute> 
         }
       />
+      <Route
+        path="/admin/fees-analytics"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <FeesAnalyticsPage />
+            </DashboardLayout>
+         </ProtectedRoute> 
+        }
+      />
+
+      <Route
+  path="/faculty"
+  element={
+    <ProtectedRoute>
+      <RoleRoute allowedRoles={["FACULTY","COLLEGE_ADMIN"]}>
+        <DashboardLayout>
+          <FacultyDashboard />
+        </DashboardLayout>
+      </RoleRoute>
+    </ProtectedRoute>
+  }
+/>
 
     </Routes>
   );
