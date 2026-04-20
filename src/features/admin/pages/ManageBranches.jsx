@@ -35,21 +35,28 @@ const ManageBranches = ({ selectedCourse, onBack }) => {
   }, [selectedCourse]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await createBranchAPI({
-        ...form,
-        courseId: selectedCourse._id,
-      });
-      setForm({ name: "", code: "", intakeCapacity: 60 });
-      fetchBranches();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  e.preventDefault();
+  
+  // Guard clause: Don't proceed if selectedCourse is missing
+  if (!selectedCourse?._id) {
+    console.error("No course selected");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    await createBranchAPI({
+      ...form,
+      courseId: selectedCourse._id, // This is where it was crashing
+    });
+    setForm({ name: "", code: "", intakeCapacity: 60 });
+    fetchBranches();
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <DashboardLayout>

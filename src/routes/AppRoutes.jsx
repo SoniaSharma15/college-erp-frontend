@@ -20,6 +20,7 @@ import CreateStaff from "../features/admin/pages/staff/CreateStaff";
 import EditStaff from "../features/admin/pages/staff/EditStaff";// Route Guards
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
+import AuthorityNoticePage from "../features/admin/pages/authorityNotice/pages/AuthorityNoticePage";
 
 const AppRoutes = () => {
   return (
@@ -27,7 +28,7 @@ const AppRoutes = () => {
 
       {/* AUTH */}
       {/* PUBLIC */}
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
 
       {/* ================= SUPER ADMIN ================= */}
 
@@ -132,6 +133,15 @@ const AppRoutes = () => {
               <ManageBranches />
             </RoleRoute>
           </ProtectedRoute>
+        }
+      />
+    
+      <Route
+        path="/admin/authority-notice"
+        element={
+          // <ProtectedRoute>
+              <AuthorityNoticePage />
+          // </ProtectedRoute> 
         }
       />
 

@@ -1,1 +1,20 @@
 @import "tailwindcss";
+@media print {
+  /* Hide everything */
+  body * {
+    visibility: hidden;
+  }
+  /* Show only the notice container and its children */
+  #notice-preview, #notice-preview * {
+    visibility: visible;
+  }
+  /* Position the notice at the very top-left of the printed page */
+  #notice-preview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none !important;
+    shadow: none !important;
+  }
+}
