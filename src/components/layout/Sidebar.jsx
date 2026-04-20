@@ -29,7 +29,6 @@ const Sidebar = () => {
     COLLEGE_ADMIN: [
   { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { name: "Staff", path: "/admin/staff", icon: Users },
-  { name: "Departments", path: "/admin/departments", icon: Building2 },
   { name: "Courses", path: "/admin/courses", icon: BookOpen },
   { name: "Branches", path: "/admin/branches", icon: GitBranch }
 ],

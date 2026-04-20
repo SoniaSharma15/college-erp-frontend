@@ -15,28 +15,33 @@ const Login = () => {
     if (error) setError(""); // Clear error when typing
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
 
-    try {
-      const res = await axios.post("/auth/login", form);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+  try {
+    localStorage.clear(); // 🔥 FIX
 
-      const role = res.data.user.roles[0];
-      if (role === "SUPER_ADMIN") {
-        navigate("/superadmin");
-      } else if (role === "COLLEGE_ADMIN") {
-        navigate("/admin");
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password");
-    } finally {
-      setLoading(false);
+    const res = await axios.post("/auth/login", form);
+
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+    const role = res.data.user.roles[0];
+
+    if (role === "SUPER_ADMIN") {
+      navigate("/superadmin");
+    } else if (role === "COLLEGE_ADMIN") {
+      navigate("/admin");
     }
-  };
+
+  } catch (err) {
+    setError(err.response?.data?.message || "Invalid email or password");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
